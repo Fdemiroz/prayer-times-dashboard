@@ -1,118 +1,195 @@
-# Prayer Times Dashboard
+<div align="center">
 
-A minimal Islamic prayer time web dashboard optimized for Google Nest Hub (7-inch, 1024x600 landscape display).
+# 🕌 Prayer Times Dashboard
 
-![Next.js](https://img.shields.io/badge/Next.js-14-black)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38bdf8)
+**A beautiful Islamic prayer times display optimized for Google Nest Hub and smart displays**
 
-## Features
+[![Next.js](https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38bdf8?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-- Large current time display
-- Hijri date (from Al-Adhan API)
-- Daily prayer times with current prayer highlight
-- Countdown to next prayer
-- Iqama times (configurable offsets)
-- Auto-refresh at midnight
-- LocalStorage caching
-- Multi-language support (English, Dutch, Turkish)
-- Dark mode only, optimized for always-on displays
-- No user interaction required
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg?style=flat-square)](https://github.com/Fdemiroz/prayer-times-dashboard/graphs/commit-activity)
+
+[Live Demo](https://prayer-dashboard.vercel.app) · [Report Bug](https://github.com/Fdemiroz/prayer-times-dashboard/issues) · [Request Feature](https://github.com/Fdemiroz/prayer-times-dashboard/issues)
+
+</div>
 
 ---
 
-## 1. Local Development Setup
+## 📖 Table of Contents
+
+- [About](#-about)
+- [Screenshots](#-screenshots)
+- [Features](#-features)
+- [Quick Start](#-quick-start)
+- [Configuration](#%EF%B8%8F-configuration)
+- [Deployment](#-deployment)
+- [Google Nest Hub Setup](#-google-nest-hub-setup)
+- [Google Assistant Routines](#-google-assistant-routines)
+- [Project Structure](#-project-structure)
+- [API Reference](#-api-reference)
+- [Troubleshooting](#-troubleshooting)
+- [Roadmap](#-roadmap)
+- [Contributing](#-contributing)
+- [Acknowledgments](#-acknowledgments)
+- [License](#-license)
+
+---
+
+## 🌙 About
+
+Prayer Times Dashboard is a minimal, elegant Islamic prayer time web application designed for **always-on smart displays** like Google Nest Hub (7-inch, 1024x600). 
+
+Built with modern web technologies, it features a stunning Islamic aesthetic with geometric patterns, mosque silhouettes, and a carefully crafted dark theme that's easy on the eyes during night prayers.
+
+### Why This Project?
+
+- 🕋 **Purpose-built** for Muslim households wanting a dedicated prayer display
+- 📺 **Optimized** for Google Nest Hub and similar smart displays
+- 🎨 **Beautiful** Islamic-inspired design with attention to detail
+- 🌍 **Multi-language** support for diverse communities
+- ⚡ **Fast & Reliable** with offline caching and self-healing UI
+
+---
+
+## 📸 Screenshots
+
+<div align="center">
+
+| Islamic Theme | Prayer Timeline |
+|:-------------:|:---------------:|
+| *Screenshot coming soon* | *Screenshot coming soon* |
+
+</div>
+
+> 💡 **Tip:** Add your own screenshots by placing images in the `public/` folder and updating the paths above.
+
+---
+
+## ✨ Features
+
+### Core Features
+| Feature | Description |
+|---------|-------------|
+| 🕐 **Large Clock Display** | High-contrast time display optimized for viewing from distance |
+| 📅 **Hijri Calendar** | Automatic Islamic date with crescent moon icon |
+| 🕌 **Prayer Times** | All 5 daily prayers + Sunrise with iqama times |
+| ⏱️ **Live Countdown** | Real-time countdown to next prayer with pulse animation |
+| 📍 **Geolocation** | Automatic location detection with manual fallback |
+
+### Islamic Design
+| Feature | Description |
+|---------|-------------|
+| 🌟 **Geometric Patterns** | Subtle Islamic star patterns in the background |
+| 🏛️ **Mosque Silhouette** | Beautiful skyline with domes and minarets |
+| 🌙 **Night Theme** | Dark teal/gold color scheme for OLED displays |
+| 📊 **Day Timeline** | Visual progress bar showing prayer times |
+
+### Technical Features
+| Feature | Description |
+|---------|-------------|
+| 🌐 **Multi-language** | English, Nederlands, Türkçe |
+| 💾 **Offline Cache** | LocalStorage caching for reliability |
+| 🔄 **Self-healing** | Auto-refresh on visibility change and periodic checks |
+| 📱 **Responsive** | Optimized for 1024x600 but works on any screen |
+
+---
+
+## 🚀 Quick Start
 
 ### Prerequisites
 
-- **Node.js** 18.x or higher
-- **npm** (comes with Node.js) or **yarn**
+- [Node.js](https://nodejs.org/) 18.x or higher
+- npm (comes with Node.js) or [yarn](https://yarnpkg.com/)
 
 ### Installation
 
 ```bash
 # Clone the repository
-git clone <your-repo-url>
-cd prayer-dashboard
+git clone https://github.com/Fdemiroz/prayer-times-dashboard.git
+
+# Navigate to the project
+cd prayer-times-dashboard
 
 # Install dependencies
 npm install
-# or
-yarn install
-```
 
-### Running Locally
-
-```bash
 # Start development server
 npm run dev
-# or
-yarn dev
 ```
 
-The app will be available at:
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-```
-http://localhost:3000
-```
-
-### Production Build
+### One-Liner
 
 ```bash
-# Build for production
-npm run build
-
-# Start production server
-npm run start
+git clone https://github.com/Fdemiroz/prayer-times-dashboard.git && cd prayer-times-dashboard && npm install && npm run dev
 ```
-
-### Configuration
-
-Edit `lib/config.ts` to customize:
-
-| Setting | Description | Default |
-|---------|-------------|---------|
-| `DEFAULT_LOCATION` | Latitude, longitude, city, country | Hengelo, NL |
-| `CALCULATION_METHOD` | Al-Adhan API method (see comments) | 13 (Diyanet) |
-| `IQAMA_OFFSETS` | Minutes after adhan for iqama | 5-10 min |
-| `DEFAULT_LANGUAGE` | UI language (`en`, `nl`, `tr`) | `nl` |
 
 ---
 
-## 2. Casting to Google Nest Hub
+## ⚙️ Configuration
 
-### Why Localhost Cannot Be Cast Directly
+Edit `lib/config.ts` to customize the dashboard:
 
-Google Chromecast/Nest Hub requires:
-1. **HTTPS** connection (localhost uses HTTP)
-2. **Public network accessibility** (localhost is not accessible from your Nest Hub)
+### Location Settings
 
-The Nest Hub is a separate device on your network and cannot reach `localhost` on your computer.
+```typescript
+export const DEFAULT_LOCATION: LocationConfig = {
+  latitude: 52.2659,      // Your latitude
+  longitude: 6.7931,      // Your longitude
+  city: 'Hengelo',        // Display name
+  country: 'Nederland',   // Display name
+  timezone: 'Europe/Amsterdam',
+};
+```
 
-### Option A: Chrome Tab Casting (Development/Testing)
+### Prayer Calculation Method
 
-This is a hacky workaround for local development:
+```typescript
+export const CALCULATION_METHOD = 13; // Diyanet (Turkey)
+```
 
-1. **Open Chrome** on your computer
-2. **Navigate to** `http://localhost:3000`
-3. **Enable Kiosk Mode** (optional, for cleaner display):
-   - Press `F11` for fullscreen
-   - Or launch Chrome with: `google-chrome --kiosk http://localhost:3000`
-4. **Cast the tab**:
-   - Click the three-dot menu (⋮) → **Cast...**
-   - Select your **Nest Hub** device
-   - Choose **Cast tab** (not Cast screen)
+| ID | Method | Best For |
+|----|--------|----------|
+| 2 | ISNA | North America |
+| 3 | Muslim World League | Europe, Far East |
+| 4 | Umm Al-Qura | Saudi Arabia |
+| 5 | Egyptian | Africa, Middle East |
+| **13** | **Diyanet** | **Turkey, Europe (default)** |
+| 15 | Moonsighting Committee | Worldwide |
 
-**Limitations:**
-- Your computer must stay on and connected
-- Quality depends on your network
-- Not suitable for 24/7 display
+[View all calculation methods →](https://aladhan.com/calculation-methods)
 
-### Option B: Deploy to Public URL (Recommended)
+### Iqama Offsets
 
-Deploy your dashboard to a hosting service and cast the public URL:
+```typescript
+export const IQAMA_OFFSETS: IqamaOffsets = {
+  fajr: 10,     // Minutes after adhan
+  dhuhr: 5,
+  asr: 5,
+  maghrib: 5,
+  isha: 10,
+};
+```
 
-#### Vercel (Easiest)
+### Language
+
+```typescript
+export const DEFAULT_LANGUAGE: Language = 'nl'; // 'en', 'nl', or 'tr'
+```
+
+---
+
+## 🌐 Deployment
+
+### Vercel (Recommended)
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Fdemiroz/prayer-times-dashboard)
+
+Or deploy manually:
 
 ```bash
 # Install Vercel CLI
@@ -121,21 +198,19 @@ npm install -g vercel
 # Deploy
 vercel
 
-# Follow prompts, get your URL like:
-# https://prayer-dashboard-xxx.vercel.app
+# Your app will be live at: https://your-app.vercel.app
 ```
 
-#### Netlify
+### Netlify
 
 ```bash
 # Build the app
 npm run build
 
-# Drag the `.next` folder to Netlify dashboard
-# Or use Netlify CLI
+# Deploy via Netlify CLI or drag-and-drop the .next folder
 ```
 
-#### Self-Hosted (Docker)
+### Docker
 
 ```dockerfile
 FROM node:18-alpine
@@ -149,162 +224,81 @@ CMD ["npm", "start"]
 ```
 
 ```bash
+# Build and run
 docker build -t prayer-dashboard .
 docker run -p 3000:3000 prayer-dashboard
 ```
 
-Then set up a reverse proxy (nginx/Caddy) with HTTPS.
+---
+
+## 📺 Google Nest Hub Setup
+
+### Why Can't I Cast Localhost?
+
+Google Chromecast/Nest Hub requires:
+1. **HTTPS** connection (localhost uses HTTP)
+2. **Public network** accessibility (Nest Hub can't reach your localhost)
+
+### Option A: Chrome Tab Casting (Development)
+
+1. Open Chrome → Navigate to `http://localhost:3000`
+2. Press `F11` for fullscreen
+3. Click **⋮** → **Cast...** → Select your Nest Hub → **Cast tab**
+
+> ⚠️ Your computer must stay on. Not suitable for 24/7 use.
+
+### Option B: Deploy & Cast (Recommended)
+
+1. Deploy to Vercel (see above)
+2. Say: *"Hey Google, show `https://your-app.vercel.app` on [device name]"*
+
+### Recommended Nest Hub Settings
+
+| Setting | Recommendation |
+|---------|---------------|
+| **Volume** | Set to 0% for silent display |
+| **Do Not Disturb** | Enable to prevent interruptions |
+| **Photo Frame** | Disable or set long timeout |
+| **Brightness** | Enable Ambient EQ for auto-adjust |
 
 ---
 
-## 3. Google Assistant Routine Setup
+## 🗣️ Google Assistant Routines
 
-Once your dashboard is deployed to a public HTTPS URL, you can set up Google Assistant routines.
-
-### Casting via Voice Command
-
-Say to your Nest Hub:
-
-> "Hey Google, show `https://your-dashboard-url.vercel.app` on this display"
-
-Or:
-
-> "Hey Google, open `https://your-dashboard-url.vercel.app`"
-
-### Creating a Routine
-
-1. Open the **Google Home** app on your phone
-2. Tap your **Profile icon** → **Assistant settings**
-3. Tap **Routines**
-4. Tap **+ New routine**
-
-#### Example: Voice Trigger Routine
-
-| Setting | Value |
-|---------|-------|
-| **Starter** | "Show prayer times" |
-| **Action** | Custom command: `Open https://your-url.vercel.app on Living Room display` |
-
-Now say: **"Hey Google, show prayer times"**
-
-#### Example: Scheduled Routine (Auto-cast at Fajr)
-
-| Setting | Value |
-|---------|-------|
-| **Starter** | Scheduled time: 5:00 AM daily |
-| **Action** | `Open https://your-url.vercel.app on Living Room display` |
-
-The dashboard will automatically appear on your Nest Hub every morning.
-
-#### Example: Sunrise Routine (Turn off after Sunrise)
-
-| Setting | Value |
-|---------|-------|
-| **Starter** | Sunrise |
-| **Action** | `Stop casting on Living Room display` |
-
-### Routine Command Examples
+### Voice Command Examples
 
 ```
-# Cast to specific device
-"Open https://prayer-dashboard.vercel.app on Kitchen display"
-
-# Cast to all displays
-"Open https://prayer-dashboard.vercel.app on all displays"
-
-# Stop casting
-"Stop casting on Living Room display"
-"Hey Google, stop"
+"Hey Google, show https://prayer-dashboard.vercel.app on Living Room display"
+"Hey Google, open https://prayer-dashboard.vercel.app on all displays"
+"Hey Google, stop casting on Living Room display"
 ```
 
----
-
-## 4. Recommended Nest Hub Settings
-
-### Volume Settings
-
-For a quiet prayer dashboard:
-
-```
-"Hey Google, set volume to 0"
-```
-
-Or in Google Home app:
-- Device settings → **Audio** → **Alarm & timer volume**: 0%
-
-### Do Not Disturb
-
-Enable to prevent interruptions:
-
-```
-"Hey Google, turn on Do Not Disturb"
-```
-
-Or schedule DND:
-- Google Home → Device → **Do Not Disturb** → Set schedule
-
-### Ambient Mode / Photo Frame
-
-Disable to prevent the dashboard from being replaced:
+### Create a Routine
 
 1. Open **Google Home** app
-2. Select your **Nest Hub**
-3. Tap **Settings** (gear icon)
-4. Go to **Photo Frame**
-5. Set to **Off** or set a very long timeout
+2. **Profile** → **Assistant settings** → **Routines**
+3. Tap **+ New routine**
 
-Alternatively, keep the dashboard cast continuously via a scheduled routine.
+#### Example: Voice Trigger
 
-### Screen Brightness
+| Setting | Value |
+|---------|-------|
+| Starter | "Show prayer times" |
+| Action | `Open https://your-app.vercel.app on Living Room display` |
 
-For bedroom use, set adaptive brightness:
+#### Example: Scheduled (Auto-cast at Fajr)
 
-```
-"Hey Google, set brightness to 50%"
-```
-
-Or enable **Ambient EQ** in device settings for automatic adjustment.
-
-### Screen Timeout
-
-The Nest Hub doesn't have a screen timeout when casting. The cast will remain active until:
-- You say "Hey Google, stop"
-- Another cast takes over
-- Network disconnection
-
----
-
-## 5. Optional Improvements
+| Setting | Value |
+|---------|-------|
+| Starter | Scheduled: 5:00 AM daily |
+| Action | `Open https://your-app.vercel.app on Living Room display` |
 
 ### Home Assistant Integration
 
-Integrate with Home Assistant for advanced automation:
-
 ```yaml
-# configuration.yaml
-rest_command:
-  cast_prayer_dashboard:
-    url: "http://homeassistant.local:8123/api/services/media_player/play_media"
-    method: POST
-    headers:
-      Authorization: "Bearer YOUR_TOKEN"
-    payload: '{"entity_id": "media_player.nest_hub", "media_content_id": "https://your-dashboard.vercel.app", "media_content_type": "cast"}'
-
 # automations.yaml
 automation:
   - alias: "Cast Prayer Dashboard at Fajr"
-    trigger:
-      - platform: time
-        at: "05:00:00"
-    action:
-      - service: rest_command.cast_prayer_dashboard
-```
-
-Or use the [Home Assistant Cast integration](https://www.home-assistant.io/integrations/cast/):
-
-```yaml
-automation:
-  - alias: "Show Prayer Times"
     trigger:
       - platform: time
         at: "05:00:00"
@@ -316,175 +310,150 @@ automation:
           view_path: prayer-times
 ```
 
-### Ramadan Mode
-
-Ideas for Ramadan-specific features:
-
-- **Suhoor countdown**: Time remaining until Fajr (end of eating)
-- **Iftar countdown**: Time remaining until Maghrib (breaking fast)
-- **Ramadan day counter**: "Day 15 of Ramadan"
-- **Special Ramadan theme**: Gold/purple accent colors
-- **Taraweeh reminder**: After Isha notification
-
-Implementation approach:
-```typescript
-// Add to lib/config.ts
-export const RAMADAN_MODE = {
-  enabled: true,
-  startDate: '2025-02-28', // 1 Ramadan 1446
-  endDate: '2025-03-29',   // 29/30 Ramadan
-};
-
-// Add Suhoor countdown in page.tsx
-const getSuhoorCountdown = () => {
-  // Suhoor ends at Fajr
-  return prayerStatus?.current === 'isha' 
-    ? formatCountdown(prayerStatus.secondsUntilNext)
-    : null;
-};
-```
-
-### Iqama Countdown Timers
-
-Show countdown to iqama after adhan time passes:
-
-```typescript
-// In page.tsx, add iqama countdown logic
-const getIqamaCountdown = (prayer: PrayerName) => {
-  const adhanMinutes = timeToMinutes(prayerTimes[prayer]);
-  const iqamaMinutes = adhanMinutes + IQAMA_OFFSETS[prayer];
-  const nowMinutes = currentTime.getHours() * 60 + currentTime.getMinutes();
-  
-  if (nowMinutes >= adhanMinutes && nowMinutes < iqamaMinutes) {
-    const remaining = (iqamaMinutes - nowMinutes) * 60 - currentTime.getSeconds();
-    return formatCountdown(remaining);
-  }
-  return null;
-};
-```
-
-### Audio Adhan Notifications
-
-Add audio adhan playback (requires user interaction to enable):
-
-```typescript
-// Add to page.tsx
-const playAdhan = () => {
-  const audio = new Audio('/adhan.mp3');
-  audio.play();
-};
-
-// Trigger when prayer time arrives
-useEffect(() => {
-  if (prayerStatus && prayerStatus.secondsUntilNext <= 0) {
-    playAdhan();
-  }
-}, [prayerStatus]);
-```
-
-Note: Browsers require user interaction before playing audio. For Nest Hub, consider using Google Assistant TTS instead.
-
-### Additional Feature Ideas
-
-- **Qibla direction compass** (requires device orientation API)
-- **Weather integration** (OpenWeatherMap API)
-- **Multiple location support** (family members in different cities)
-- **Prayer tracker** (mark prayers as completed)
-- **Quran verse of the day**
-- **Islamic events calendar** (Eid, Laylatul Qadr, etc.)
-
 ---
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 prayer-dashboard/
 ├── app/
-│   ├── globals.css      # Tailwind + custom styles
-│   ├── layout.tsx       # Root layout with metadata
-│   └── page.tsx         # Main dashboard component
+│   ├── globals.css       # Tailwind + Islamic patterns + animations
+│   ├── layout.tsx        # Root layout with metadata
+│   └── page.tsx          # Main dashboard component
 ├── lib/
-│   ├── config.ts        # Location, method, translations
-│   ├── prayerUtils.ts   # API fetch, time calculations
-│   ├── storage.ts       # LocalStorage caching
-│   └── types.ts         # TypeScript interfaces
-├── public/              # Static assets
-├── tailwind.config.ts   # Tailwind configuration
-├── next.config.js       # Next.js configuration
+│   ├── config.ts         # Location, method, translations
+│   ├── prayerUtils.ts    # API fetch, time calculations
+│   ├── storage.ts        # LocalStorage caching
+│   └── types.ts          # TypeScript interfaces
+├── public/               # Static assets (add screenshots here)
+├── tailwind.config.ts    # Tailwind configuration
+├── next.config.js        # Next.js configuration
 ├── package.json
 └── README.md
 ```
 
 ---
 
-## API Reference
+## 📡 API Reference
 
-This project uses the [Al-Adhan Prayer Times API](https://aladhan.com/prayer-times-api):
+This project uses the free [Al-Adhan Prayer Times API](https://aladhan.com/prayer-times-api).
+
+### Endpoint
 
 ```
-GET https://api.aladhan.com/v1/timings/{date}
-  ?latitude={lat}
-  &longitude={lng}
-  &method={calculation_method}
+GET https://api.aladhan.com/v1/timings/{DD-MM-YYYY}
+    ?latitude={lat}
+    &longitude={lng}
+    &method={calculation_method}
 ```
 
-### Calculation Methods
+### Response Includes
 
-| ID | Method |
-|----|--------|
-| 0 | Shia Ithna-Ashari |
-| 1 | University of Islamic Sciences, Karachi |
-| 2 | Islamic Society of North America (ISNA) |
-| 3 | Muslim World League |
-| 4 | Umm Al-Qura University, Makkah |
-| 5 | Egyptian General Authority of Survey |
-| 13 | **Diyanet İşleri Başkanlığı, Turkey** (default) |
-| 15 | Moonsighting Committee Worldwide |
-
-See full list: https://aladhan.com/calculation-methods
+- Prayer times (Fajr, Sunrise, Dhuhr, Asr, Maghrib, Isha)
+- Hijri date (day, month, year)
+- Gregorian date
+- Calculation metadata
 
 ---
 
-## Troubleshooting
+## 🔧 Troubleshooting
 
-### Prayer times not loading
+<details>
+<summary><b>Prayer times not loading</b></summary>
 
-1. Check your internet connection
-2. Verify the Al-Adhan API is accessible: https://api.aladhan.com/v1/timings
-3. Check browser console for errors
-4. Clear localStorage: `localStorage.clear()`
+1. Check internet connection
+2. Verify API: https://api.aladhan.com/v1/timings
+3. Open browser console (F12) for errors
+4. Clear cache: `localStorage.clear()` in console
 
-### Geolocation not working
+</details>
 
-- The app falls back to `DEFAULT_LOCATION` in `lib/config.ts`
-- Geolocation requires HTTPS in production
-- Check browser permissions
+<details>
+<summary><b>Geolocation not working</b></summary>
 
-### Cast keeps disconnecting
+- Geolocation requires **HTTPS** in production
+- Check browser permissions (click lock icon in URL bar)
+- App falls back to `DEFAULT_LOCATION` in `lib/config.ts`
 
-- Ensure stable WiFi connection
-- Keep your computer awake (if using tab casting)
-- Use a deployed URL instead of localhost
-- Set up a scheduled routine to re-cast
+</details>
 
-### Hijri date is wrong
+<details>
+<summary><b>Cast keeps disconnecting</b></summary>
 
-The Al-Adhan API calculates Hijri dates automatically. For manual adjustment:
-- Some regions observe Hijri dates differently
-- You can add a `hijriAdjustment` parameter to the API call
+- Ensure stable WiFi on both devices
+- Use deployed URL instead of localhost
+- Set up scheduled routine to auto-reconnect
+- Disable ambient mode on Nest Hub
+
+</details>
+
+<details>
+<summary><b>Hijri date is wrong</b></summary>
+
+- Al-Adhan calculates automatically
+- Some regions observe dates differently
+- Add `&adjustment=1` or `-1` to API call for manual adjustment
+
+</details>
 
 ---
 
-## License
+## 🗺️ Roadmap
 
-MIT License - Feel free to use and modify for personal or commercial use.
+- [ ] **Ramadan Mode** - Suhoor/Iftar countdown, day counter
+- [ ] **Adhan Audio** - Optional audio notifications
+- [ ] **Qibla Compass** - Direction indicator
+- [ ] **Weather Widget** - Current conditions
+- [ ] **Prayer Tracker** - Mark prayers as completed
+- [ ] **Quran Verse** - Daily verse display
+- [ ] **More Languages** - Arabic, Urdu, Indonesian
+
+See the [open issues](https://github.com/Fdemiroz/prayer-times-dashboard/issues) for a full list of proposed features.
 
 ---
 
-## Contributing
+## 🤝 Contributing
 
-Contributions welcome! Please open an issue or PR for:
-- Bug fixes
-- New language translations
-- Feature improvements
-- Documentation updates
+Contributions make the open-source community amazing! Any contributions you make are **greatly appreciated**.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+### Ways to Contribute
+
+- 🐛 Report bugs
+- 💡 Suggest features
+- 🌍 Add translations
+- 📖 Improve documentation
+- ⭐ Star the project!
+
+---
+
+## 🙏 Acknowledgments
+
+- [Al-Adhan API](https://aladhan.com/) - Free prayer times API
+- [Next.js](https://nextjs.org/) - React framework
+- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS
+- [Vercel](https://vercel.com/) - Hosting platform
+- Islamic geometric patterns inspired by traditional mosque art
+
+---
+
+## 📄 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+
+<div align="center">
+
+**If this project helped you, please consider giving it a ⭐**
+
+Made with ❤️ for the Muslim community
+
+[Report Bug](https://github.com/Fdemiroz/prayer-times-dashboard/issues) · [Request Feature](https://github.com/Fdemiroz/prayer-times-dashboard/issues)
+
+</div>
