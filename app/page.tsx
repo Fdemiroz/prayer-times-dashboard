@@ -16,7 +16,7 @@
  */
 
 import { useEffect, useState, useCallback, useMemo } from 'react';
-import type { PrayerTimes, HijriDate, PrayerStatus, PrayerName, Language } from '@/lib/types';
+import type { PrayerTimes, HijriDate, PrayerStatus, PrayerName, Language, QuranAyah } from '@/lib/types';
 import { 
   fetchPrayerTimes, 
   getPrayerStatus, 
@@ -25,6 +25,7 @@ import {
   formatHijriDate,
   formatGregorianDate,
   calculateIqamaTime,
+  fetchRandomAyah,
 } from '@/lib/prayerUtils';
 import { 
   getCachedPrayerData, 
@@ -110,6 +111,88 @@ function LanguageSelector({ currentLanguage, onLanguageChange, isOpen, onToggle 
           </button>
         ))}
       </div>
+    </div>
+  );
+}
+
+// =============================================================================
+// QURAN AYAH COMPONENT
+// =============================================================================
+
+interface QuranAyahDisplayProps {
+  ayah: QuranAyah | null;
+  isLoading: boolean;
+  onRefresh: () => void;
+  language: Language;
+}
+
+function QuranAyahDisplay({ ayah, isLoading, onRefresh, language }: QuranAyahDisplayProps) {
+  const handleRefreshClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onRefresh();
+  };
+
+  // Surah labels by language
+  const surahLabel: Record<Language, string> = {
+    en: 'Surah',
+    nl: 'Soera',
+    tr: 'Süre',
+  };
+
+  return (
+    <div className="ayah-card">
+      {/* Refresh Button */}
+      <button
+        onClick={handleRefreshClick}
+        disabled={isLoading}
+        className={`ayah-refresh-btn ${isLoading ? 'ayah-refresh-spinning' : ''}`}
+        aria-label="Get new ayah"
+      >
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          viewBox="0 0 24 24" 
+          fill="none" 
+          stroke="currentColor" 
+          strokeWidth="2" 
+          strokeLinecap="round" 
+          strokeLinejoin="round"
+          className="w-4 h-4"
+        >
+          <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+          <path d="M3 3v5h5" />
+          <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
+          <path d="M16 16h5v5" />
+        </svg>
+      </button>
+
+      {isLoading ? (
+        <div className="ayah-loading">
+          <div className="ayah-loading-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      ) : ayah ? (
+        <>
+          {/* Arabic Text */}
+          <p className="ayah-arabic" dir="rtl">
+            {ayah.arabic}
+          </p>
+          
+          {/* Translation */}
+          <p className="ayah-translation">
+            &ldquo;{ayah.translations[language]}&rdquo;
+          </p>
+          
+          {/* Reference */}
+          <p className="ayah-reference">
+            — {surahLabel[language]} {ayah.surahName} ({ayah.surahNumber}:{ayah.ayahInSurah})
+          </p>
+        </>
+      ) : (
+        <p className="text-gray-500 text-sm">Could not load ayah</p>
+      )}
     </div>
   );
 }
@@ -230,6 +313,11 @@ export default function PrayerDashboard() {
   const [error, setError] = useState<string | null>(null);
   const [language, setLanguage] = useState<Language>('nl');
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
+  
+  // Quran Ayah state
+  const [currentAyah, setCurrentAyah] = useState<QuranAyah | null>(null);
+  const [isAyahLoading, setIsAyahLoading] = useState(false);
+  const [lastPrayerForAyah, setLastPrayerForAyah] = useState<PrayerName | null>(null);
 
   // Load saved language on mount
   useEffect(() => {
@@ -242,6 +330,22 @@ export default function PrayerDashboard() {
     setLanguage(newLanguage);
     setCachedLanguage(newLanguage);
   };
+
+  // ---------------------------------------------------------------------------
+  // LOAD RANDOM QURAN AYAH
+  // ---------------------------------------------------------------------------
+  const loadRandomAyah = useCallback(async () => {
+    setIsAyahLoading(true);
+    try {
+      const ayah = await fetchRandomAyah();
+      setCurrentAyah(ayah);
+    } catch (err) {
+      console.error('Failed to load Quran ayah:', err);
+      // Keep existing ayah on error
+    } finally {
+      setIsAyahLoading(false);
+    }
+  }, []);
 
   // Get translations
   const t = TRANSLATIONS[language];
@@ -364,6 +468,23 @@ export default function PrayerDashboard() {
     document.addEventListener('click', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
   }, [isLanguageMenuOpen]);
+
+  // Load ayah on initial mount
+  useEffect(() => {
+    loadRandomAyah();
+  }, [loadRandomAyah]);
+
+  // Refresh ayah when prayer changes (prayer time has finished)
+  useEffect(() => {
+    if (prayerStatus?.current && prayerStatus.current !== lastPrayerForAyah) {
+      // Only refresh if this isn't the initial load
+      if (lastPrayerForAyah !== null) {
+        console.log(`Prayer changed from ${lastPrayerForAyah} to ${prayerStatus.current}, refreshing ayah...`);
+        loadRandomAyah();
+      }
+      setLastPrayerForAyah(prayerStatus.current);
+    }
+  }, [prayerStatus?.current, lastPrayerForAyah, loadRandomAyah]);
 
   // ---------------------------------------------------------------------------
   // RENDER HELPERS
@@ -520,8 +641,16 @@ export default function PrayerDashboard() {
           />
         )}
 
-        {/* PRAYER TIMES GRID - 6 columns including Sunrise */}
-        <div className="grid grid-cols-6 gap-2 flex-1 mt-1">
+        {/* QURAN AYAH */}
+        <QuranAyahDisplay
+          ayah={currentAyah}
+          isLoading={isAyahLoading}
+          onRefresh={() => loadRandomAyah()}
+          language={language}
+        />
+
+        {/* PRAYER TIMES GRID - Compact 6 columns */}
+        <div className="grid grid-cols-6 gap-2 mt-auto">
           {allPrayers.map((prayer, index) => {
             const isSunrise = prayer === 'sunrise';
             const isActive = !isSunrise && prayerStatus?.current === prayer;
@@ -540,16 +669,16 @@ export default function PrayerDashboard() {
                   ${isActive ? 'prayer-card-active' : ''} 
                   ${isPast ? 'prayer-card-past' : ''}
                   ${isSunrise ? 'prayer-card-sunrise' : ''}
-                  flex flex-col items-center justify-center relative`}
+                  flex flex-col items-center justify-center py-2`}
               >
                 {/* Prayer Name */}
-                <p className={`prayer-name text-xs mb-1.5 text-display font-semibold uppercase tracking-wide
+                <p className={`prayer-name text-[0.65rem] mb-0.5 text-display font-semibold uppercase tracking-wide
                   ${isActive ? 'text-emerald-300' : isSunrise ? 'text-amber-300/70' : isPast ? 'text-gray-600' : 'text-gray-400'}`}>
                   {getPrayerDisplayName(prayer)}
                 </p>
                 
                 {/* Prayer Time */}
-                <p className={`prayer-time text-2xl font-bold text-time
+                <p className={`prayer-time text-lg font-bold text-time
                   ${isActive ? 'text-white' : isSunrise ? 'text-amber-200/80' : isPast ? 'text-gray-600' : 'text-gray-200'}`}>
                   {time}
                 </p>
@@ -557,14 +686,14 @@ export default function PrayerDashboard() {
                 {/* Iqama Time (not for sunrise) */}
                 {iqamaTime && (
                   <div className={`iqama-badge ${isActive ? 'iqama-badge-active' : ''}`}>
-                    <span className="text-[0.6rem] uppercase tracking-wider opacity-60">{t.iqama}</span>
-                    <span className="text-xs font-semibold text-time">{iqamaTime}</span>
+                    <span className="uppercase tracking-wider opacity-60">{t.iqama}</span>
+                    <span className="font-semibold text-time">{iqamaTime}</span>
                   </div>
                 )}
                 
-                {/* Sunrise icon */}
+                {/* Sunrise indicator */}
                 {isSunrise && (
-                  <div className="mt-1 text-amber-400/60 text-lg">☀</div>
+                  <span className="text-amber-400/50 text-xs mt-0.5">☀</span>
                 )}
               </div>
             );

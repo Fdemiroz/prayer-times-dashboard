@@ -8,7 +8,9 @@ import type {
   HijriDate, 
   PrayerStatus, 
   PrayerName, 
-  AlAdhanResponse 
+  AlAdhanResponse,
+  QuranAyah,
+  AlQuranCloudResponse,
 } from './types';
 import { CALCULATION_METHOD } from './config';
 
@@ -244,4 +246,71 @@ export function formatGregorianDate(date: Date, locale: string = 'nl-NL'): strin
     month: 'long',
     year: 'numeric',
   });
+}
+
+// =============================================================================
+// QURAN AYAH API
+// =============================================================================
+
+// Total number of ayahs in the Quran
+const TOTAL_AYAHS = 6236;
+
+// Translation editions - fetched all at once for caching
+const TRANSLATION_EDITIONS = {
+  en: 'en.sahih',      // Sahih International
+  nl: 'nl.siregar',    // Sofyan S. Siregar
+  tr: 'tr.diyanet',    // Diyanet Isleri
+};
+
+/**
+ * Fetch a random Quran ayah with ALL translations (EN, NL, TR)
+ * All translations are cached so language changes don't require new API calls
+ * @returns QuranAyah object with Arabic text and all translations
+ */
+export async function fetchRandomAyah(): Promise<QuranAyah> {
+  // Generate random ayah number (1-6236)
+  const randomAyahNumber = Math.floor(Math.random() * TOTAL_AYAHS) + 1;
+  
+  // Fetch Arabic + all 3 translations in one request
+  const editions = `ar.alafasy,${TRANSLATION_EDITIONS.en},${TRANSLATION_EDITIONS.nl},${TRANSLATION_EDITIONS.tr}`;
+  const url = `https://api.alquran.cloud/v1/ayah/${randomAyahNumber}/editions/${editions}`;
+  
+  try {
+    const response = await fetch(url);
+    
+    if (!response.ok) {
+      throw new Error(`Quran API request failed: ${response.status}`);
+    }
+    
+    const data: AlQuranCloudResponse = await response.json();
+    
+    if (data.code !== 200 || !data.data || data.data.length < 4) {
+      throw new Error('Invalid response from Quran API');
+    }
+    
+    // Data order: Arabic, English, Dutch, Turkish
+    const arabicData = data.data[0];
+    const englishData = data.data[1];
+    const dutchData = data.data[2];
+    const turkishData = data.data[3];
+    
+    const ayah: QuranAyah = {
+      number: arabicData.number,
+      arabic: arabicData.text,
+      translations: {
+        en: englishData.text,
+        nl: dutchData.text,
+        tr: turkishData.text,
+      },
+      surahName: arabicData.surah.englishName,
+      surahNameAr: arabicData.surah.name,
+      surahNumber: arabicData.surah.number,
+      ayahInSurah: arabicData.numberInSurah,
+    };
+    
+    return ayah;
+  } catch (error) {
+    console.error('Failed to fetch Quran ayah:', error);
+    throw error;
+  }
 }

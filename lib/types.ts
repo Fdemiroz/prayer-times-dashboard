@@ -76,6 +76,45 @@ export interface Translations {
   months: string[];
 }
 
+// Quran Ayah structure with all translations cached
+export interface QuranAyah {
+  number: number;           // Global ayah number (1-6236)
+  arabic: string;           // Arabic text
+  translations: {           // All translations cached
+    en: string;             // English (Sahih International)
+    nl: string;             // Dutch (Sofyan S. Siregar)
+    tr: string;             // Turkish (Diyanet Isleri)
+  };
+  surahName: string;        // Surah name in English
+  surahNameAr: string;      // Surah name in Arabic
+  surahNumber: number;      // Surah number (1-114)
+  ayahInSurah: number;      // Ayah number within surah
+}
+
+// Al-Quran Cloud API response structure
+export interface AlQuranCloudResponse {
+  code: number;
+  status: string;
+  data: Array<{
+    number: number;
+    text: string;
+    surah: {
+      number: number;
+      name: string;
+      englishName: string;
+      englishNameTranslation: string;
+      numberOfAyahs: number;
+    };
+    numberInSurah: number;
+    edition: {
+      identifier: string;
+      language: string;
+      name: string;
+      englishName: string;
+    };
+  }>;
+}
+
 // Al-Adhan API response structure
 export interface AlAdhanResponse {
   code: number;
