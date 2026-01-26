@@ -1,0 +1,633 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =============================================================================
+   GOOGLE FONTS IMPORT
+   - Amiri: Arabic-style serif font for Islamic aesthetic
+   - Outfit: Clean modern display font
+   - IBM Plex Mono: Monospace for time displays
+   ============================================================================= */
+@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+/* =============================================================================
+   CSS VARIABLES - Islamic Color Palette
+   ============================================================================= */
+:root {
+  /* Emerald - Active states */
+  --color-emerald-400: #34d399;
+  --color-emerald-500: #10b981;
+  --color-emerald-600: #059669;
+  
+  /* Gold/Amber - Islamic accent */
+  --color-gold-300: #fcd34d;
+  --color-gold-400: #fbbf24;
+  --color-gold-500: #f59e0b;
+  --color-gold-600: #d97706;
+  
+  /* Teal - Mosque/Night sky */
+  --color-teal-800: #115e59;
+  --color-teal-900: #134e4a;
+  --color-teal-950: #042f2e;
+  
+  /* Cream - Subtle highlights */
+  --color-cream-100: #fef3c7;
+  --color-cream-200: #fde68a;
+  
+  /* Glows */
+  --glow-emerald: rgba(52, 211, 153, 0.4);
+  --glow-gold: rgba(251, 191, 36, 0.4);
+  --glow-teal: rgba(19, 78, 74, 0.6);
+}
+
+/* =============================================================================
+   BASE STYLES
+   ============================================================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+  color: #fff;
+  font-family: 'Outfit', sans-serif;
+}
+
+body {
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: default;
+}
+
+/* =============================================================================
+   NEST HUB OPTIMIZATIONS (1024x600)
+   ============================================================================= */
+@media screen and (max-width: 1024px) and (max-height: 600px) {
+  html {
+    font-size: 13px;
+  }
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+  html {
+    font-size: 15px;
+  }
+}
+
+/* =============================================================================
+   ISLAMIC GEOMETRIC PATTERN BACKGROUND
+   ============================================================================= */
+.islamic-pattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='%23fbbf24' fill-opacity='1'%3E%3Cpath d='M40 0l40 40-40 40L0 40 40 0zm0 10L10 40l30 30 30-30-30-30zm0 10l20 20-20 20-20-20 20-20zm0 10l10 10-10 10-10-10 10-10z'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 80px 80px;
+}
+
+/* Alternative 8-pointed star pattern */
+.islamic-stars {
+  position: absolute;
+  inset: 0;
+  opacity: 0.025;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpolygon fill='%23fbbf24' points='50,0 61,35 97,35 68,57 79,91 50,70 21,91 32,57 3,35 39,35'/%3E%3C/svg%3E");
+  background-size: 100px 100px;
+}
+
+/* =============================================================================
+   MOSQUE SILHOUETTE
+   ============================================================================= */
+.mosque-silhouette {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 180px;
+  pointer-events: none;
+  background: linear-gradient(to top, var(--color-teal-950) 0%, transparent 100%);
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 200' preserveAspectRatio='none'%3E%3Cpath fill='white' d='M0,200 L0,180 Q50,180 50,160 L50,140 Q50,100 80,100 L80,80 Q80,60 100,50 Q120,60 120,80 L120,100 Q150,100 150,140 L150,160 Q150,180 200,180 L200,200 M200,200 L200,150 Q250,150 250,120 L250,100 Q250,70 280,70 L280,60 Q280,30 320,20 Q360,30 360,60 L360,70 Q390,70 390,100 L390,120 Q390,150 440,150 L440,200 M440,200 L440,170 Q480,170 480,150 L480,130 Q480,110 500,110 L500,90 Q500,70 520,60 Q540,70 540,90 L540,110 Q560,110 560,130 L560,150 Q560,170 600,170 L600,200 M600,200 L600,160 Q650,160 650,130 L650,100 Q650,60 700,40 Q750,60 750,100 L750,130 Q750,160 800,160 L800,200 M800,200 L800,175 Q830,175 830,155 L830,135 Q830,115 850,115 L850,95 Q850,75 870,65 Q890,75 890,95 L890,115 Q910,115 910,135 L910,155 Q910,175 940,175 L940,200 M940,200 L940,165 Q970,165 970,145 L970,125 Q970,95 1010,95 L1010,75 Q1010,45 1060,25 Q1110,45 1110,75 L1110,95 Q1150,95 1150,125 L1150,145 Q1150,165 1180,165 L1180,200 L1200,200 L1200,200 Z'/%3E%3C/svg%3E");
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 200' preserveAspectRatio='none'%3E%3Cpath fill='white' d='M0,200 L0,180 Q50,180 50,160 L50,140 Q50,100 80,100 L80,80 Q80,60 100,50 Q120,60 120,80 L120,100 Q150,100 150,140 L150,160 Q150,180 200,180 L200,200 M200,200 L200,150 Q250,150 250,120 L250,100 Q250,70 280,70 L280,60 Q280,30 320,20 Q360,30 360,60 L360,70 Q390,70 390,100 L390,120 Q390,150 440,150 L440,200 M440,200 L440,170 Q480,170 480,150 L480,130 Q480,110 500,110 L500,90 Q500,70 520,60 Q540,70 540,90 L540,110 Q560,110 560,130 L560,150 Q560,170 600,170 L600,200 M600,200 L600,160 Q650,160 650,130 L650,100 Q650,60 700,40 Q750,60 750,100 L750,130 Q750,160 800,160 L800,200 M800,200 L800,175 Q830,175 830,155 L830,135 Q830,115 850,115 L850,95 Q850,75 870,65 Q890,75 890,95 L890,115 Q910,115 910,135 L910,155 Q910,175 940,175 L940,200 M940,200 L940,165 Q970,165 970,145 L970,125 Q970,95 1010,95 L1010,75 Q1010,45 1060,25 Q1110,45 1110,75 L1110,95 Q1150,95 1150,125 L1150,145 Q1150,165 1180,165 L1180,200 L1200,200 L1200,200 Z'/%3E%3C/svg%3E");
+  mask-size: 100% 100%;
+  -webkit-mask-size: 100% 100%;
+  opacity: 0.6;
+}
+
+/* Crescent moon */
+.crescent-moon {
+  display: inline-block;
+  margin-right: 0.5rem;
+  color: var(--color-gold-400);
+  text-shadow: 0 0 20px var(--glow-gold);
+}
+
+/* =============================================================================
+   ANIMATED BACKGROUND - Islamic Night Sky
+   ============================================================================= */
+.animated-bg {
+  background: linear-gradient(
+    180deg,
+    #000000 0%,
+    #021a12 20%,
+    var(--color-teal-950) 60%,
+    #0a2520 100%
+  );
+  position: relative;
+}
+
+/* Subtle animated glow orbs */
+.glow-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.15;
+  animation: float 15s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.glow-orb-1 {
+  top: -10%;
+  left: -5%;
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, var(--color-gold-500) 0%, transparent 70%);
+  animation-delay: 0s;
+}
+
+.glow-orb-2 {
+  bottom: 10%;
+  right: -5%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, var(--color-emerald-600) 0%, transparent 70%);
+  animation-delay: -7s;
+}
+
+.glow-orb-3 {
+  top: 30%;
+  left: 40%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, var(--color-teal-800) 0%, transparent 70%);
+  opacity: 0.1;
+  animation-delay: -3s;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(20px, -15px) scale(1.03);
+  }
+  66% {
+    transform: translate(-15px, 10px) scale(0.97);
+  }
+}
+
+/* =============================================================================
+   PRAYER TIMELINE
+   ============================================================================= */
+.prayer-timeline {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 50px;
+  padding: 0 1rem;
+  margin: 0.75rem 0;
+}
+
+.timeline-track {
+  position: relative;
+  flex: 1;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: visible;
+}
+
+.timeline-progress {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-gold-500), var(--color-emerald-500));
+  border-radius: 2px;
+  transition: width 1s linear;
+}
+
+.timeline-marker {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  background: rgba(30, 30, 30, 0.9);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+.timeline-marker-past {
+  background: var(--color-gold-500);
+  border-color: var(--color-gold-400);
+  box-shadow: 0 0 10px var(--glow-gold);
+}
+
+.timeline-marker-active {
+  width: 16px;
+  height: 16px;
+  background: var(--color-emerald-400);
+  border-color: var(--color-emerald-300);
+  box-shadow: 0 0 15px var(--glow-emerald);
+  animation: marker-pulse 2s ease-in-out infinite;
+}
+
+.timeline-marker-future {
+  background: rgba(50, 50, 50, 0.8);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.timeline-label {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.65rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  opacity: 0.6;
+}
+
+.timeline-label-active {
+  color: var(--color-emerald-400);
+  opacity: 1;
+}
+
+.timeline-now {
+  position: absolute;
+  top: -8px;
+  width: 2px;
+  height: 20px;
+  background: var(--color-gold-400);
+  border-radius: 1px;
+  box-shadow: 0 0 10px var(--glow-gold);
+  z-index: 3;
+}
+
+@keyframes marker-pulse {
+  0%, 100% {
+    box-shadow: 0 0 15px var(--glow-emerald);
+  }
+  50% {
+    box-shadow: 0 0 25px var(--glow-emerald), 0 0 40px rgba(52, 211, 153, 0.2);
+  }
+}
+
+/* =============================================================================
+   PRAYER CARD STYLES - Compact with Islamic arch
+   ============================================================================= */
+.prayer-card {
+  @apply backdrop-blur-md border transition-all duration-500;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 25, 20, 0.8) 0%,
+    rgba(5, 20, 15, 0.6) 100%
+  );
+  border-color: rgba(251, 191, 36, 0.1);
+  padding: 0.75rem;
+  border-radius: 1rem;
+  /* Islamic arch top */
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+
+.prayer-card-past {
+  opacity: 0.4;
+}
+
+.prayer-card-past .prayer-time {
+  text-decoration: line-through;
+  text-decoration-color: rgba(251, 191, 36, 0.5);
+}
+
+.prayer-card-sunrise {
+  background: linear-gradient(
+    180deg,
+    rgba(251, 191, 36, 0.08) 0%,
+    rgba(217, 119, 6, 0.04) 100%
+  );
+  border-color: rgba(251, 191, 36, 0.15);
+}
+
+.prayer-card-active {
+  @apply border-2;
+  background: linear-gradient(
+    180deg,
+    rgba(52, 211, 153, 0.2) 0%,
+    rgba(16, 185, 129, 0.1) 100%
+  );
+  border-color: var(--color-emerald-400);
+  box-shadow: 
+    0 0 40px rgba(52, 211, 153, 0.3),
+    0 0 80px rgba(52, 211, 153, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -20px 40px rgba(52, 211, 153, 0.05);
+  animation: active-glow 3s ease-in-out infinite;
+}
+
+@keyframes active-glow {
+  0%, 100% {
+    box-shadow: 
+      0 0 40px rgba(52, 211, 153, 0.3),
+      0 0 80px rgba(52, 211, 153, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    box-shadow: 
+      0 0 60px rgba(52, 211, 153, 0.4),
+      0 0 100px rgba(52, 211, 153, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+}
+
+/* =============================================================================
+   IQAMA BADGE - Gold accent
+   ============================================================================= */
+.iqama-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  margin-top: 0.35rem;
+  padding: 0.3rem 0.6rem;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 0.5rem;
+  border: 1px solid rgba(251, 191, 36, 0.1);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.iqama-badge-active {
+  background: rgba(52, 211, 153, 0.15);
+  border-color: rgba(52, 211, 153, 0.3);
+  color: rgba(52, 211, 153, 0.9);
+}
+
+/* =============================================================================
+   TYPOGRAPHY
+   ============================================================================= */
+.text-time {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.text-arabic {
+  font-family: 'Amiri', serif;
+}
+
+.text-display {
+  font-family: 'Outfit', sans-serif;
+}
+
+/* Large clock display with gold shimmer */
+.clock-display {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 700;
+  font-size: clamp(2.75rem, 7vw, 4rem);
+  letter-spacing: -0.03em;
+  text-shadow: 0 0 60px rgba(251, 191, 36, 0.2);
+  background: linear-gradient(180deg, #ffffff 0%, var(--color-cream-200) 50%, #ffffff 100%);
+  background-size: 100% 200%;
+  animation: shimmer 3s ease-in-out infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@keyframes shimmer {
+  0%, 100% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 0% 100%;
+  }
+}
+
+/* Countdown display - Emerald with gold accent */
+.countdown-display {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 700;
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--color-emerald-400) 0%, var(--color-gold-400) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.countdown-pulse {
+  animation: countdown-pulse 2s ease-in-out infinite;
+}
+
+@keyframes countdown-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.01);
+  }
+}
+
+/* =============================================================================
+   INFO CARDS - Compact with gold borders
+   ============================================================================= */
+.info-card {
+  @apply backdrop-blur-md;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 25, 20, 0.85) 0%,
+    rgba(5, 20, 15, 0.7) 100%
+  );
+  border: 1px solid rgba(251, 191, 36, 0.1);
+  border-radius: 1rem;
+  padding: 0.75rem;
+}
+
+.info-card-accent {
+  background: linear-gradient(
+    180deg,
+    rgba(52, 211, 153, 0.12) 0%,
+    rgba(16, 185, 129, 0.06) 100%
+  );
+  border: 1px solid rgba(52, 211, 153, 0.25);
+}
+
+.info-card-countdown {
+  background: linear-gradient(
+    180deg,
+    rgba(251, 191, 36, 0.08) 0%,
+    rgba(217, 119, 6, 0.04) 100%
+  );
+  border: 1px solid rgba(251, 191, 36, 0.2);
+}
+
+/* =============================================================================
+   LANGUAGE SELECTOR - Gold accents
+   ============================================================================= */
+.language-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(251, 191, 36, 0.2);
+  border-radius: 10px;
+  color: rgba(251, 191, 36, 0.7);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.language-toggle:hover {
+  background: rgba(251, 191, 36, 0.1);
+  border-color: rgba(251, 191, 36, 0.4);
+  color: var(--color-gold-400);
+}
+
+.language-toggle:active {
+  transform: scale(0.95);
+}
+
+.language-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.5rem;
+  min-width: 150px;
+  background: rgba(10, 25, 20, 0.95);
+  border: 1px solid rgba(251, 191, 36, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px) scale(0.95);
+  transition: all 0.2s ease;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.language-menu-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.language-option {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.language-option:hover {
+  background: rgba(251, 191, 36, 0.1);
+  color: white;
+}
+
+.language-option-active {
+  background: rgba(251, 191, 36, 0.15);
+  color: var(--color-gold-400);
+}
+
+.language-option:not(:last-child) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* =============================================================================
+   LOADING STATE
+   ============================================================================= */
+.loading-pulse {
+  animation: loading-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes loading-pulse {
+  0%, 100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* =============================================================================
+   SCROLLBAR & TOUCH
+   ============================================================================= */
+::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus {
+  outline: none;
+}
+
+button:focus-visible {
+  outline: 2px solid var(--color-gold-400);
+  outline-offset: 2px;
+}
+
+/* =============================================================================
+   PRAYER TIME TEXT
+   ============================================================================= */
+.prayer-time {
+  transition: all 0.3s ease;
+}
+
+.prayer-name {
+  transition: all 0.3s ease;
+}
+
+/* Location badge with gold accent */
+.location-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.75rem;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(251, 191, 36, 0.15);
+  border-radius: 2rem;
+  color: rgba(251, 191, 36, 0.7);
+  font-size: 0.75rem;
+}
