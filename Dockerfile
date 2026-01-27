@@ -20,6 +20,9 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
+# Ensure public folder exists (even if empty)
+RUN mkdir -p public
+
 # Build the Next.js application
 RUN npm run build
 
