@@ -1,0 +1,38 @@
+# =============================================================================
+# Prayer Times Dashboard - Docker Compose
+# 
+# Usage:
+#   docker-compose up -d --build    # Build and start
+#   docker-compose logs -f          # View logs
+#   docker-compose down             # Stop
+#   docker-compose pull && docker-compose up -d  # Update
+# =============================================================================
+
+version: '3.8'
+
+services:
+  prayer-dashboard:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: prayer-dashboard
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - TZ=Europe/Amsterdam
+    # Health check to ensure the service is running
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    # Resource limits (optional, good for NUC)
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 256M
