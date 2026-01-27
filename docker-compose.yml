@@ -8,8 +8,6 @@
 #   docker-compose pull && docker-compose up -d  # Update
 # =============================================================================
 
-version: '3.8'
-
 services:
   prayer-dashboard:
     build: 
