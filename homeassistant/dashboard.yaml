@@ -1,0 +1,59 @@
+title: Thuis
+views:
+  - title: Thuis
+    path: thuis
+    icon: mdi:home
+    cards:
+      - type: grid
+        title: Automations
+        columns: 2
+        square: false
+        cards:
+          - type: button
+            entity: switch.automation_slaapkamer_switch_1
+            name: Slaapkamer
+            icon: mdi:bed
+          - type: button
+            entity: switch.automation_tuinlampen_aan
+            name: Tuinlampen
+            icon: mdi:outdoor-lamp
+          - type: button
+            entity: switch.automation_tv_lamp_uit
+            name: TV Lamp
+            icon: mdi:television-ambient-light
+          - type: button
+            entity: switch.automation_weg_van_huis
+            name: Weg van huis
+            icon: mdi:home-export-outline
+          - type: button
+            entity: switch.automation_woonkamer
+            name: Woonkamer
+            icon: mdi:sofa
+      - type: grid
+        title: Devices
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: vacuum.emine
+            name: Emine
+            icon: mdi:robot-vacuum
+          - type: tile
+            entity: switch.emine_niet_storen
+            name: Niet storen
+            icon: mdi:do-not-disturb
+          - type: weather-forecast
+            entity: weather.forecast_thuis
+            show_current: true
+            show_forecast: true
+      - type: picture-glance
+        title: Parkeerplaats
+        camera_image: camera.parkeerplaats_vloeiend
+        camera_view: live
+  - title: Gebedstijden
+    path: gebedstijden
+    icon: mdi:clock-outline
+    cards:
+      - type: webpage
+        url: http://192.168.2.21:3000
+        title: Gebedstijden

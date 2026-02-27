@@ -23,6 +23,12 @@ COPY . .
 # Ensure public folder exists (even if empty)
 RUN mkdir -p public
 
+# HA env vars are needed at build time (NEXT_PUBLIC_ vars are inlined)
+ARG NEXT_PUBLIC_HA_URL=http://192.168.2.21:8123
+ARG NEXT_PUBLIC_HA_TOKEN=
+ENV NEXT_PUBLIC_HA_URL=$NEXT_PUBLIC_HA_URL
+ENV NEXT_PUBLIC_HA_TOKEN=$NEXT_PUBLIC_HA_TOKEN
+
 # Build the Next.js application
 RUN npm run build
 

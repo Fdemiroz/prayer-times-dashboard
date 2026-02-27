@@ -115,6 +115,50 @@ export interface AlQuranCloudResponse {
   }>;
 }
 
+// =============================================================================
+// HOME ASSISTANT TYPES
+// =============================================================================
+
+// Generic HA entity state
+export interface HAEntityState {
+  entity_id: string;
+  state: string;
+  attributes: Record<string, unknown>;
+  last_changed: string;
+  last_updated: string;
+}
+
+// Light-specific attributes
+export interface HALightAttributes {
+  brightness?: number;          // 0-255
+  rgb_color?: [number, number, number];
+  color_temp_kelvin?: number;
+  min_color_temp_kelvin?: number;
+  max_color_temp_kelvin?: number;
+  color_mode?: string;
+  supported_color_modes?: string[];
+  friendly_name?: string;
+  icon?: string;
+}
+
+// Vacuum-specific attributes
+export interface HAVacuumAttributes {
+  fan_speed?: string;
+  fan_speed_list?: string[];
+  battery_level?: number;
+  status?: string;
+  friendly_name?: string;
+  icon?: string;
+  supported_features?: number;
+}
+
+// Light entity config for dashboard
+export interface LightConfig {
+  entityId: string;
+  name: string;
+  icon: 'outdoor-lamp' | 'ceiling-light' | 'lamp' | 'lightbulb';
+}
+
 // Al-Adhan API response structure
 export interface AlAdhanResponse {
   code: number;
