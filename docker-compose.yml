@@ -15,7 +15,7 @@ services:
       dockerfile: Dockerfile
       args:
         - NEXT_PUBLIC_HA_URL=http://192.168.2.21:8123
-        - NEXT_PUBLIC_HA_TOKEN=${HA_TOKEN}
+        - NEXT_PUBLIC_HA_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJmNDg1ZWE3ZThlOTU0MTljODk1NjhjNWJlNDA1OGYyNiIsImlhdCI6MTc3MjE4MDUyMCwiZXhwIjoyMDg3NTQwNTIwfQ.13RiXXyyBYp6BAeyjNbr2eOhaVZtLs_s3vvEDHb-y1s
     container_name: prayer-dashboard
     ports:
       - "3000:3000"
@@ -24,7 +24,7 @@ services:
       - NODE_ENV=production
       - TZ=Europe/Amsterdam
       - NEXT_PUBLIC_HA_URL=http://192.168.2.21:8123
-      - NEXT_PUBLIC_HA_TOKEN=${HA_TOKEN}
+      - NEXT_PUBLIC_HA_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJmNDg1ZWE3ZThlOTU0MTljODk1NjhjNWJlNDA1OGYyNiIsImlhdCI6MTc3MjE4MDUyMCwiZXhwIjoyMDg3NTQwNTIwfQ.13RiXXyyBYp6BAeyjNbr2eOhaVZtLs_s3vvEDHb-y1s
     # Health check to ensure the service is running
     healthcheck:
       test: ["CMD", "wget", "-q", "--spider", "http://localhost:3000"]
